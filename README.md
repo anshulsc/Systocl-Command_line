@@ -7,26 +7,26 @@
 ## Installation
 1. Clone the repo.
 2. Navigate to the directory.
-3. Run `sudo ./install.sh`
+
 
 ## Usage
 
 ```bash
-sysopctl --help    # Display help message
-sysopctl --version # Display version information
+./sysopctl --help    # Display help message
+./sysopctl --version # Display version information
 
 # Service Management
-sysopctl service list          # List active services
-sudo sysopctl service start <name>   # Start a service
-sudo sysopctl service stop <name>    # Stop a service
+./sysopctl service list          # List active services
+sudo ./sysopctl service start <name>   # Start a service
+sudo ./sysopctl service stop <name>    # Stop a service
 
 # System Monitoring
-sysopctl system load           # Display system load
-sysopctl disk usage            # Show disk usage
-sysopctl process monitor       # Display process activity
+./sysopctl system load           # Display system load
+./sysopctl disk usage            # Show disk usage
+./sysopctl process monitor       # Display process activity
 
 # Log Analysis
-sudo sysopctl logs analyze        # Analyze recent critical logs
+sudo ./sysopctl logs analyze        # Analyze recent critical logs
 
 # Backup
-sudo sysopctl backup <path>       # Backup the specified path
+sudo ./sysopctl backup <path>       # Backup the specified path
