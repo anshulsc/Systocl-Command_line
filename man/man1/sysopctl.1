@@ -1,0 +1,68 @@
+.TH sysopctl 1 "January 2024" "v0.1.0" "System Operations Control"
+.SH NAME
+sysopctl \- A command-line utility for system administration
+.SH SYNOPSIS
+.B sysopctl
+[\fIOPTION\fR]... [\fICOMMAND\fR]...
+.SH DESCRIPTION
+.PP
+\fBsysopctl\fR is a tool designed to simplify system administration tasks on Linux systems. It provides functionalities to manage services, monitor system resources, analyze logs, and perform backups.
+.SH OPTIONS
+.TP
+.B \-\-help
+Display this help message and exit.
+.TP
+.B \-\-version
+Display the version of sysopctl and exit.
+.SH COMMANDS
+.SS Service Management
+.TP
+.B service list
+List all active services.
+.TP
+.B service start \fINAME\fR
+Start a service specified by \fINAME\fR.
+.TP
+.B service stop \fINAME\fR
+Stop a service specified by \fINAME\fR.
+.SS System Monitoring
+.TP
+.B system load
+Display the current system load averages.
+.TP
+.B disk usage
+Show disk usage statistics by partition.
+.TP
+.B process monitor
+Display real-time process activity.
+.SS Log Analysis
+.TP
+.B logs analyze
+Provide a summary of recent critical log entries.
+.SS Backup
+.TP
+.B backup \fIPATH\fR
+Initiate a backup of the specified \fIPATH\fR.
+.SH EXAMPLES
+.TP
+List active services:
+.B sysopctl service list
+.TP
+Start a service named 'apache2':
+.B sysopctl service start apache2
+.TP
+View system load:
+.B sysopctl system load
+.TP
+Backup the /etc directory:
+.B sysopctl backup /etc
+.SH "SEE ALSO"
+.BR systemctl (1),
+.BR uptime (1),
+.BR df (1),
+.BR top (1),
+.BR htop (1),
+.BR journalctl (1),
+.BR rsync (1)
+.SH AUTHOR
+ANSHUL SINGH
