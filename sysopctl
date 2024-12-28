@@ -34,6 +34,23 @@ display_version() {
     echo "sysopctl version ${VERSION}"
 }
 
+list_services() {
+# Set the PYTHONWARNINGS environment variable to ignore DeprecationWarnings
+  export PYTHONWARNINGS="ignore:invalid escape sequence:DeprecationWarning"
+
+  # Run systemctl
+  systemctl list-units --type=service --state=active
+
+  # Unset the environment variable (optional, for cleanup)
+  unset PYTHONWARNINGS
+}
+
+
+# Function to display system load
+display_system_load() {
+    uptime
+}
+
 # Main logic (for now, just handle --help and --version)
 if [[ $# -eq 0 ]]; then
     display_help
@@ -47,6 +64,24 @@ case "$1" in
     --version)
         display_version
         ;;
+    service)
+        if [[ "$2" == "list" ]]; then
+            list_services
+        else
+            echo "Invalid usage of service command. Use 'sysopctl service list'."
+            exit 1
+        fi
+        ;;
+
+     system)
+        if [[ "$2" == "load" ]]; then
+            display_system_load
+        else
+            echo "Invalid usage of system command. Use 'sysopctl system load'."
+            exit 1
+        fi
+        ;;
+
     *)
         echo "Invalid option or command. Use --help for usage."
         exit 1
