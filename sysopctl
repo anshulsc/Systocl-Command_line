@@ -51,6 +51,33 @@ display_system_load() {
     uptime
 }
 
+
+# Function to start a service
+start_service() {
+    if [[ -z "$1" ]]; then
+        echo "Error: Service name required."
+        exit 1
+    fi
+    sudo systemctl start "$1"
+    echo "Service '$1' started successfully."
+}
+
+# Function to stop a service
+stop_service() {
+    if [[ -z "$1" ]]; then
+        echo "Error: Service name required."
+        exit 1
+    fi
+    sudo systemctl stop "$1"
+    echo "Service '$1' stopped successfully."
+}
+
+# Function to display disk usage
+display_disk_usage() {
+    df -h
+}
+
+
 # Main logic (for now, just handle --help and --version)
 if [[ $# -eq 0 ]]; then
     display_help
@@ -67,8 +94,12 @@ case "$1" in
     service)
         if [[ "$2" == "list" ]]; then
             list_services
+        elif [[ "$2" == "start" ]]; then
+            start_service "$3"
+        elif [[ "$2" == "stop" ]]; then
+            stop_service "$3"
         else
-            echo "Invalid usage of service command. Use 'sysopctl service list'."
+            echo "Invalid usage of service command. See --help for usage."
             exit 1
         fi
         ;;
@@ -78,6 +109,15 @@ case "$1" in
             display_system_load
         else
             echo "Invalid usage of system command. Use 'sysopctl system load'."
+            exit 1
+        fi
+        ;;
+
+    disk)
+        if [[ "$2" == "usage" ]]; then
+            display_disk_usage
+        else
+            echo "Invalid usage of disk command. Use 'sysopctl disk usage'."
             exit 1
         fi
         ;;
