@@ -78,6 +78,48 @@ display_disk_usage() {
 }
 
 
+# Function to monitor system processes
+monitor_processes() {
+    # You can use top or htop (if installed)
+    # Example using top:
+    top -a -n 1 | head -n 15  # Show top output once and take top 15 lines
+}
+
+analyze_logs() {
+    # Example using journalctl to show critical logs from the last hour
+    sudo journalctl --since "1 hour ago" --priority=3 --pager-end
+}
+
+
+# Function to perform backup
+perform_backup() {
+    if [[ -z "$1" ]]; then
+        echo "Error: Backup path required."
+        exit 1
+    fi
+
+    local target_path="$1"
+    local backup_dir="/var/backups/sysopctl"  # Or any suitable location
+    local timestamp=$(date +%Y%m%d_%H%M%S)
+    local backup_file="backup_${timestamp}.tar.gz"
+
+    echo "Starting backup of '$target_path' to '$backup_dir/$backup_file'..."
+
+    # Create backup directory if it doesn't exist
+    sudo mkdir -p "$backup_dir"
+
+    # Use tar for backup (rsync is another option)
+    sudo tar -czvf "$backup_dir/$backup_file" "$target_path"
+
+    if [[ $? -eq 0 ]]; then
+        echo "Backup completed successfully: $backup_dir/$backup_file"
+    else
+        echo "Error during backup. Check permissions and disk space."
+        exit 1
+    fi
+}
+
+
 # Main logic (for now, just handle --help and --version)
 if [[ $# -eq 0 ]]; then
     display_help
@@ -120,6 +162,28 @@ case "$1" in
             echo "Invalid usage of disk command. Use 'sysopctl disk usage'."
             exit 1
         fi
+        ;;
+
+     process)
+        if [[ "$2" == "monitor" ]]; then
+            monitor_processes
+        else
+            echo "Invalid usage of process command. Use 'sysopctl process monitor'."
+            exit 1
+        fi
+        ;;
+
+    logs)
+        if [[ "$2" == "analyze" ]]; then
+            analyze_logs
+        else
+            echo "Invalid usage of logs command. Use 'sysopctl logs analyze'."
+            exit 1
+        fi
+        ;;
+
+    backup)
+        perform_backup "$2"
         ;;
 
     *)
